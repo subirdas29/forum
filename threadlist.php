@@ -67,25 +67,36 @@
             <a class="btn btn-success btn-lg" href="#" role="button">Learn more</a>
         </div>
 
-
-        <div class="container">
+        <?php
+        if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']==true){
+        echo '<div class="container">
 
             <h1 class="py-2">Start a Discussion</h1>
-            <form action="<?php echo $_SERVER['REQUEST_URI']?>" method="post">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Problem Title</label>
-                    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
-                    <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as possible
+            <form action="'. $_SERVER["REQUEST_URI"] . '" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Problem Title</label>
+            <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp">
+            <small id="emailHelp" class="form-text text-muted">Keep your title as short and crisp as possible
 
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label for="exampleFormControlTextarea1">Ellaborate your concern</label>
-                    <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-success">Submit</button>
-            </form>
+            </small>
         </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Ellaborate your concern</label>
+            <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+        </form>
+    </div>';
+    }
+    else{
+    echo ' 
+    <div class="container">
+    <h1 class="py-2">Start a Discussion</h1>
+    <p>You are not logged in.Please login to be able to start a Discussion</p></div>
+    ';
+    }
+    ?>
+
 
 
         <div class="container" id="ques">
