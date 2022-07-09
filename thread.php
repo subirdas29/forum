@@ -36,9 +36,10 @@
     $showAleart=false;
     $method = $_SERVER['REQUEST_METHOD'];
     if($method=='POST'){
-        $comment=$_POST['comment'];
-        $sql ="INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`)
-         VALUES ('$comment', '$id', '0', current_timestamp());" ;
+        $comment = $_POST['comment'];
+        $sno = $_POST['sno'];
+        $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`)
+         VALUES ('$comment', '$id', '$sno', current_timestamp())" ;
         $result = mysqli_query($conn, $sql);
         $showAleart=true;
         if($showAleart)
@@ -79,6 +80,7 @@
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">Type your comment...</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                <input type="hidden" name="sno" value="'. $_SESSION["sno"]. '">
             </div>
             <button type="submit" class="btn btn-success">Post Comment</button>
         </form>
@@ -102,22 +104,25 @@
     $sql = "SELECT * FROM `comments` WHERE thread_id=$id"; 
     $result = mysqli_query($conn, $sql);
     $noResult = true;
-    while($row = mysqli_fetch_assoc($result)){
+    while($row = mysqli_fetch_assoc($result))
+    {
         $noResult = false;
         $id = $row['comment_id'];
         $content = $row['comment_content']; 
         $comment_time = $row['comment_time']; 
         $thread_user_id = $row['comment_by']; 
+        $sql2 = "SELECT user_name FROM `users` WHERE sno='$thread_user_id'";
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_assoc($result2);
 
       
 
         echo '<div class="media my-3">
-            <img src="Images/userdefault.png" width="44px" class="mr-3" alt="...">
-            <div class="media-body">
-            <p class="font-weight-bold my-0">Anonymous User at '.$comment_time.'</p>
-              '. $content . '
-            </div>
-        </div>';
+        <img src="Images/userdefault.png" width="54px" class="mr-3" alt="...">
+        <div class="media-body">
+           <p class="font-weight-bold my-0">'. $row2['user_name'] . ' at '. $comment_time. '</p> '. $content . '
+        </div>
+    </div>';
 
         }
         // echo "this is good";
