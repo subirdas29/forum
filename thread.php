@@ -28,6 +28,13 @@
     while($row = mysqli_fetch_assoc($result)){
         $title = $row['thread_title'];
         $desc = $row['thread_desc'];
+        $thread_user_id = $row['thread_user_id'];
+       
+        $sql2 = "SELECT user_name FROM `users` WHERE sno='$thread_user_id'";
+        $result2 = mysqli_query($conn, $sql2);
+        $row2 = mysqli_fetch_assoc($result2);
+        $posted_by = $row2['user_name'];
+
     }
     
     ?>
@@ -37,6 +44,8 @@
     $method = $_SERVER['REQUEST_METHOD'];
     if($method=='POST'){
         $comment = $_POST['comment'];
+        $comment = str_replace("<", "&lt;", $comment);
+        $comment = str_replace(">", "&gt;", $comment);
         $sno = $_POST['sno'];
         $sql = "INSERT INTO `comments` ( `comment_content`, `thread_id`, `comment_by`, `comment_time`)
          VALUES ('$comment', '$id', '$sno', current_timestamp())" ;
@@ -66,7 +75,7 @@
                 Do not post “offensive” posts, links or images.Do not post “offensive” posts, links or images.Do not PM
                 users asking for help.
             </p>
-            <p><b>Posted by:Joy</b></p>
+            <p>Posted by: <em><?php echo $posted_by;?></em></p>
         </div>
     </div>
 

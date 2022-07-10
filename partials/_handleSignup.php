@@ -8,7 +8,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $cpass = $_POST['signupcPassword'];
 
     // Check whether this email exists
-    $existSql = "select * from `users` where user_email='$user_email'";
+    $existSql = "select * from `users` where user_email='$user_email' OR user_name='$user_name'";
     $result = mysqli_query($conn, $existSql);
     $numRows = mysqli_num_rows($result);
     if($numRows>0){

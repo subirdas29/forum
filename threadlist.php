@@ -36,6 +36,13 @@
     if($method=='POST'){
         $th_title=$_POST['title'];
         $th_desc=$_POST['desc'];
+
+        $th_title= str_replace("<", "&lt;", $th_title);
+        $th_title= str_replace(">", "&gt;", $th_title);
+
+        $th_desc = str_replace("<", "&lt;", $th_desc);
+        $th_desc = str_replace(">", "&gt;", $th_desc);
+
         $sno = $_POST['sno'];
         $sql = "INSERT INTO `threads` (`thread_title`, `thread_desc`, `thread_cat_id`, `thread_user_id`,  `timestamp`)
          VALUES ('$th_title', '$th_desc', '$id', '$sno', current_timestamp())";
