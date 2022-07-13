@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <style>
-    .container {
+    #maincontainer {
         min-height: 100vh;
     }
     </style>
@@ -20,50 +20,42 @@
 <body>
     <?php include 'partials/_dbconnect.php';?>
     <?php include 'partials/_header.php';?>
-    <div class="container my-3">
-        <h1 class="py-2">Search results for <em> "<?php echo $_GET['search']?>"</em></h1>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
-        <div class="result">
-            <h3><a href="/categories/ddf" class="text-dark">dfafjfffj</a></h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa vitae similique consectetur suscipit error
-                iure sapiente debitis. Laborum blanditiis iure adipisci cupiditate eligendi repudiandae quam architecto
-                aut neque quidem? Commodi fuga eligendi quaerat exercitationem necessitatibus atque tenetur repellendus
-                in unde esse id ex eaque, deserunt, iste, eum ipsam expedita veritatis.</p>
-        </div>
+
+
+    <div class="container my-3" id="maincontainer">
+        <h1 class="py-3">Search results for <em>"<?php echo $_GET['search']?>"</em></h1>
+        <?php
+        $noResult=true;
+        $query = $_GET['search'];
+        $sql = "SELECT * FROM threads where match (thread_title,thread_desc) against ('$query')";
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+        $title = $row['thread_title'];
+        $desc = $row['thread_desc'];
+        $thread_id=$row['thread_id'];
+        $url= "thread.php?threadid=". $thread_id;
+        $noResult=false;
+
+        echo '<div class="result">
+                <h3><a href="'. $url. '" class="text-dark">'. $title. '</a></h3>
+                <p>'. $desc .'</p>
+            </div>';
+    }
+    if($noResult){
+        echo '<div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <p class="display-4">No Results Found</p>
+                    <p class="lead"> Suggestions:
+                <ul>
+                   <li> Make sure that all words are spelled correctly.</li>
+                   <li>Try different keywords.</li>
+                   <li>Try more general keywords.</li>
+                 </ul>  
+                    </p>
+                </div>
+             </div> ';
+    }
+    ?>
     </div>
     <?php include 'partials/_footer.php';?>
     <!-- Optional JavaScript -->

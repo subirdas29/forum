@@ -108,7 +108,7 @@
     ';
     }
     ?>
-        <div class="container" id="ques">
+        <div class="container mb-5" id="ques">
             <h1 class="py-2">Browse Questions</h1>
             <?php
             $id = $_GET['catid'];
