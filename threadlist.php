@@ -73,7 +73,7 @@
                 Do not post “offensive” posts, links or images.Do not post “offensive” posts, links or images.Do not PM
                 users asking for help.
             </p>
-            <a class="btn btn-success btn-lg" href="#" role="button">Learn more</a>
+            <a class="btn btn-success btn-lg" target=_blank href="#" role="button">Learn more</a>
         </div>
 
         <?php
