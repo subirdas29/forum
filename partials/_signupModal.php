@@ -11,8 +11,8 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" id="signupEmail" name="signupEmail"
+                        <label for="exampleInputUsername1">Username</label>
+                        <input type="text" class="form-control" id="signupUsername" name="signupUsername"
                             aria-describedby="emailHelp">
                     </div>
                     <div class="form-group">
