@@ -21,7 +21,7 @@ echo'<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Engineering-Categories
+        Categories
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">';
 
@@ -31,6 +31,9 @@ echo'<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           echo'<a class="dropdown-item" href="threadlist.php?catid='.$row['category_id'].'">' . $row['category_name']. '</a>';
         }
          echo'</div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" target=_blank href="http://www.fec.ac.bd/">Campus</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="contact.php" tabindex="-1">Contact</a>

@@ -32,13 +32,22 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="Images/coding1.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+                <img src="Images/slide.jpg" width=1500px height=500px class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="Images/coding2.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+                <img src="Images/slide2.jpg" width=1500px height=500px class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="Images/coding3.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+                <img src="Images/slide3.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="Images/slide4.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="Images/slide5.jpg" width=1500px height=500px class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="Images/slide6.jpg" width=1500px height=500px class="d-block w-100" alt="...">
             </div>
         </div>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -69,14 +78,14 @@
           $cat = $row['category_name'];
           $desc = $row['category_description'];
           echo   '<div class="col-md-4 my-2">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 20rem;">
             
-          <img src="Images/coding' .$id. '.jpg" class="card-img-top" alt="image for this category">
+          <img src="Images/Eng' .$id. '.jpg" class="card-img-top" alt="image for this category">
              
           <div class="card-body">
           <h5 class="card-title"><a href="threadlist.php?catid='.$id.'">' . $cat . '</a></h5>
           <p class="card-text">' . substr($desc, 0, 85). '... </p>
-          <a href="threadlist.php?catid=' . $id . '" class="btn btn-primary">View Threads</a>
+          <a href="threadlist.php?catid=' . $id . '" class="btn btn-primary">View Threads</a>      
       </div>
   </div>
 </div>';
