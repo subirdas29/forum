@@ -1,4 +1,24 @@
-<!doctype html>
+<?php 
+
+            require_once('partials/_dbconnect.php');
+
+            if(isset($_GET['page']))
+            {
+                $page = $_GET['page'];
+            }
+            else
+            {
+                $page = 1;
+            }
+
+            $num_per_page = 02;
+            $start_from = ($page-1)*02;
+
+            $query = "select * from threads limit $start_from,$num_per_page";
+            $result = mysqli_query($conn,$query);
+
+?>
+<!Doctype html>
 <html lang="en">
 
 <head>
@@ -111,39 +131,88 @@
         <div class="container mb-5" id="ques">
             <h1 class="py-2">Browse Questions</h1>
             <?php
+             if(isset($_GET['page']))
+             {
+                 $page = $_GET['page'];
+             }
+             else
+             {
+                 $page = 1;
+             }
+ 
+             $num_per_page = 02;
+             $start_from = ($page-1)*02;
+ 
+             $query = "select * from threads limit $start_from,$num_per_page";
+             $result = mysqli_query($conn,$query);
+ 
             $id = $_GET['catid'];
             $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $result = mysqli_query($conn, $sql);
             $noResult=true;
             while($row = mysqli_fetch_assoc($result)){
-                $noResult=false;
-                $id = $row['thread_id'];
-                $title = $row['thread_title'];
-                $desc = $row['thread_desc'];
-                $thread_time = $row['timestamp'];
-                $thread_user_id = $row['thread_user_id'];
-                $sql2 = "SELECT user_name FROM `users` WHERE sno='$thread_user_id'";
-                $result2 = mysqli_query($conn, $sql2);
-                $row2 = mysqli_fetch_assoc($result2);        
+            $noResult=false;
+            
+            $id = $row['thread_id'];
+            $title = $row['thread_title'];
+            $desc = $row['thread_desc'];
+            $thread_time = $row['timestamp'];
+            $thread_user_id = $row['thread_user_id'];
+            $sql2 = "SELECT user_name FROM `users` WHERE sno='$thread_user_id'";
+            $result2 = mysqli_query($conn, $sql2);
+            $row2 = mysqli_fetch_assoc($result2);
 
-                echo '<div class="media my-3">
+
+
+            echo '<div class="media my-3">
                 <img src="Images/userdefault.png" width="54px" class="mr-3" alt="...">
                 <div class="media-body">'.
-                 '<h5 class="mt-0"> <a class="text-dark" href="thread.php?threadid=' . $id. '">'. $title . ' </a></h5>
-                    '. $desc . ' </div>'.'<div class="font-weight-bold my-0"> Asked by: '. $row2['user_name'] . ' at '. $thread_time. '</div>'.
-            '</div>';
-    
+                    '<h5 class="mt-0"> <a class="text-dark" href="thread.php?threadid=' . $id. '">'. $title . ' </a>
+                    </h5>
+                    '. $desc . ' </div>'.'<div class="font-weight-bold my-0"> Asked by: '. $row2['user_name'] . ' at '.
+                    $thread_time. '</div>'.
+                '
+            </div>';
+
+            
             }
-        if($noResult)
-        {
+            if($noResult)
+            {
             echo'<div class="jumbotron jumbotron-fluid">
-            <div class="container">
-              <p class="display-4">No Threads Found</p>
-              <p class="lead">Be the first person to ask a question</p>
-            </div>
-          </div>';
-        }
-        ?>
+                <div class="container">
+                    <p class="display-4">No Threads Found</p>
+                    <p class="lead">Be the first person to ask a question</p>
+                </div>
+            </div>';
+            }
+            ?>
+
+            <?php 
+            $id = $_GET['catid'];
+            $pr_query = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
+            $pr_result = mysqli_query($conn, $pr_query);
+            $total_record = mysqli_num_rows($pr_result );
+            
+            $total_page = ceil($total_record/$num_per_page);
+
+            if($page>1)
+            {
+                echo "<a href='threadlist.php?catid=".$id."&page=".$page."' class='btn btn-success'>Previous</a>";
+            }
+
+            
+            for($i=1;$i<$total_page;$i++)
+            {
+                echo "<a href='threadlist.php?catid=".$id."&page=".$i."' class='btn btn-default'>$i</a>";
+            }
+
+            if($i>$page)
+            {
+                echo "<a href='threadlist.php?catid=".$id."&page=".($page+1)."' class='btn btn-success'>Next</a>";
+            }
+
+    ?>
+
 
         </div>
     </div>
