@@ -1,23 +1,3 @@
-<?php 
-
-            require_once('partials/_dbconnect.php');
-
-            if(isset($_GET['page']))
-            {
-                $page = $_GET['page'];
-            }
-            else
-            {
-                $page = 1;
-            }
-
-            $num_per_page = 02;
-            $start_from = ($page-1)*02;
-
-            $query = "select * from threads limit $start_from,$num_per_page";
-            $result = mysqli_query($conn,$query);
-
-?>
 <!Doctype html>
 <html lang="en">
 
@@ -131,21 +111,6 @@
         <div class="container mb-5" id="ques">
             <h1 class="py-2">Browse Questions</h1>
             <?php
-             if(isset($_GET['page']))
-             {
-                 $page = $_GET['page'];
-             }
-             else
-             {
-                 $page = 1;
-             }
- 
-             $num_per_page = 02;
-             $start_from = ($page-1)*02;
- 
-             $query = "select * from threads limit $start_from,$num_per_page";
-             $result = mysqli_query($conn,$query);
- 
             $id = $_GET['catid'];
             $sql = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $result = mysqli_query($conn, $sql);
@@ -188,6 +153,27 @@
             ?>
 
             <?php 
+
+        require_once('partials/_dbconnect.php');
+
+        if(isset($_GET['page']))
+        {
+            $page = $_GET['page'];
+        }
+        else
+        {
+            $page = 1;
+        }
+
+        $num_per_page = 02;
+        $start_from = ($page-1)*02;
+
+        $query = "select * from threads limit $start_from,$num_per_page";
+        $result = mysqli_query($conn,$query);
+
+        ?>
+
+            <?php 
             $id = $_GET['catid'];
             $pr_query = "SELECT * FROM `threads` WHERE thread_cat_id=$id"; 
             $pr_result = mysqli_query($conn, $pr_query);
@@ -197,7 +183,7 @@
 
             if($page>1)
             {
-                echo "<a href='threadlist.php?catid=".$id."&page=".$page."' class='btn btn-success'>Previous</a>";
+                echo "<a href='threadlist.php?catid=".$id."&page=".($page-1)."' class='btn btn-success'>Previous</a>";
             }
 
             
